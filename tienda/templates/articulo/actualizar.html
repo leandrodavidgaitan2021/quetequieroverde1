@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center p-2 mb-2 bg-success text-white">{% block title %}Actualizar Precio Articulos{% endblock %}</h5>
+                </div>
+                <div class="card-body">
+                    <form id="miFormulario" action="" method="post">
+
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="tipo">Proveedor</label>
+                            <select class="form-control" id="proveedor" name="proveedor" required>
+                              <option value="Todos">Todos</option>
+                              {% for proveedor in proveedores %}
+                                <option value="{{ proveedor.razonsocial }}">{{ proveedor.razonsocial }}</option>
+                              {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="tipo">Tipo Articulo</label>
+                            <select class="form-control" id="tipo" name="tipo" required>
+                              <option value="Todos">Todos</option>
+                              {% for categoria in categorias %}
+                              <option value="{{ categoria.categoria }}">{{ categoria.categoria }}</option>
+                              {% endfor %}
+                            </select>
+                        </div>
+
+
+
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Porcentaje</span>
+                            <input type="text" class="form-control" aria-label="Porcentaje" aria-describedby="inputGroup-sizing-sm" id="porcentaje" name="porcentaje" required maxlength="3">
+                        </div>
+
+                        <br>
+
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-success btn-sm" value="Guardar" onclick="confirmarEnvio(); return false;">
+                            <a href="{{ url_for('articulos.lista') }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+    function confirmarEnvio() {
+        // Mostrar una ventana de confirmación
+        if (confirm("¿Estás seguro de que deseas modificar Precio Articulos?")) {
+            // Si el usuario hace clic en "Aceptar", enviar el formulario a Flask
+            document.getElementById("miFormulario").submit();
+        }
+    }
+</script>
+{% endblock %}

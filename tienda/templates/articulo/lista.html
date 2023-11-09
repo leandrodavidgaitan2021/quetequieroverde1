@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<section class="container-fuid">
+    <nav class="navbar">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th class="col">
+                        <h5 class="text-center">{% block title %}Lista de articulos{% endblock %}</h5>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="d-flex justify-content-center">
+                        <form class="d-flex" method="get">
+                            <a href="{{url_for('articulos.crear')}}" class="btn btn-success btn-sm me-5">Nuevo</a>
+                            <input class="form-control form-control-sm me-2" type="search" placeholder="Buscar..." aria-label="Search" name="q">
+                            <button class="btn btn-outline-success btn-sm me-5" type="submit">Buscar</button>
+                            <a href="{{url_for('articulos.actualizar')}}" class="btn btn-warning btn-sm">Actualizar</a>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </nav>
+
+    <div class="container mt-1">
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th class="col">Articulo</th>
+                    <th class="col">Precio</th>
+                    <th class="col">Stock</th>
+                    <th class="col" colspan="1">Modificar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos %}
+                <tr>
+                    <td>
+                        <p>{{ articulo.articulo }}</p>
+                    </td>                
+                    <td>
+                        <p>{{ articulo.precio }}</p>
+                    </td>                
+                    <td>
+                        <p>{{ articulo.stock }}</p>
+                    </td>
+                    <td>
+                        <a href="{{url_for('articulos.modificar', id = articulo.id)}}" class="btn btn-info btn-sm">Modificar</a>
+                    </td>
+                
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+    
+{% endblock %}

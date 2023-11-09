@@ -1,0 +1,80 @@
+
+
+    # Si se realizo una transferencia, se guarda A EFECTIVO o A BILLETERA
+    if request.method == "POST":
+        _fecha = request.form["fecha_seleccionada"]
+        _fecha = datetime.strptime(_fecha, "%Y-%m-%d").date()
+        print(_fecha)
+ 
+        tipo_moviento = request.form["tipo_movimiento"]
+        print(tipo_moviento)
+
+        monto = int(request.form["monto"])
+        print(monto)
+     
+        if tipo_moviento == "A EFECTIVO":
+            tipo_ = "TRANSFERENCIA"
+            caja_ = "EFECTIVO"
+            monto_ = monto
+            creado_por_ = g.user.id
+            caja_ = caja.Caja(_fecha, tipo_, caja_, monto_, creado_por_)
+            db.session.add(caja_)
+            db.session.commit()
+        elif tipo_moviento == "A BILLETERA":
+            tipo_ = "TRANSFERENCIA"
+            caja_ = "BILLETERA"
+            monto_ = monto
+            creado_por_ = g.user.id
+            caja_ = caja.Caja(_fecha, tipo_, caja_, monto_, creado_por_)
+            db.session.add(caja_)
+            db.session.commit()
+    
+
+    # se guardan todas las cajas por id usuario = creado_por
+    _cajas = caja.Caja.query.filter(caja.Caja.creado_por.contains(id))
+    
+    # se inicializan las variales totales
+    total_compra_efectivo = 0
+    total_compra_billetera = 0
+    total_venta_efectivo = 0
+    total_venta_billetera = 0
+    total_transferencia_a_efectivo = 0
+    total_transferencia_a_billetera = 0
+     
+    # se busca los tipo de ventas y se guarda por tipo de caja el monto   
+    for _caja in _cajas:
+        if _caja.tipo == "VENTA":
+            if _caja.caja == "EFECTIVO":
+                total_venta_efectivo += _caja.monto
+            if _caja.caja == "BILLETERA":
+                total_venta_billetera += _caja.monto
+        elif _caja.tipo == "COMPRA":
+            if _caja.caja == "EFECTIVO":
+                total_compra_efectivo += _caja.monto
+            if _caja.caja == "BILLETERA":
+                total_compra_billetera += _caja.monto
+        elif _caja.tipo == "TRANSFERENCIA":
+            if _caja.caja == "A EFECTIVO":
+                total_transferencia_a_efectivo += _caja.monto
+            if _caja.caja == "A BILLETERA":
+                total_transferencia_a_billetera += _caja.monto
+           
+                        
+    # se envia todo a la pagina
+    return render_template('caja/lista.html', 
+                           cajas = _cajas, 
+                           t_e_compra = total_compra_efectivo, 
+                           t_b_compra = total_compra_billetera,
+                           t_e_venta = total_venta_efectivo, 
+                           t_b_venta = total_venta_billetera,
+                           t_transf_a_efectivo = total_transferencia_a_efectivo,
+                           t_transf_a_billetera = total_transferencia_a_billetera, 
+                           fecha = fecha_actual
+                           )
+
+
+
+
+    _caja_ = realizar_caja()
+    
+    return _caja_  

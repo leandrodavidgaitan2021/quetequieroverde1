@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block link%} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+{% endblock%}
+
+{% block content %}
+    <div class="lista-proveedores">
+        <div class="lista-proveedores">
+            <h5>Fecha: </h5>
+            <input class="fecha" id="fecha" type="date" value="{{ fecha }}">            
+        </div>
+        <div class="lista-proveedores">
+            <h5 class="titulo-proveedores">Proveedor</h5>
+            <select class="proveedores" id="proveedores">
+                {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}">{{proveedor.razonsocial}}</option>
+                {% endfor %}
+            </select>        
+        </div>
+    </div>
+
+    <div class="seccion-carrito">
+        <h5 class="titulo-carrito">{% block title %}Carrito de Compras{% endblock %}</h5>
+
+        <ul class="carrito" id="carrito">
+            <!-- Los elementos del carrito se agregarán aquí -->
+        </ul>
+        <div class="titulo-total">Total: <span id="total">0.00</span></div>
+        <div class="botones-acciones">
+            <a href="{{url_for('articulos.crear')}}" class="btn btn-success btn-sm">Nuevo</a>
+            <button class="vaciar-carrito" id="vaciar-carrito">Vaciar Carrito</button>
+            <select class="metodo-pago" id="metodo-pago">
+                <option value="E">Efectivo</option>
+                <option value="B">Billetera</option>
+            </select>
+            <button class="finalizar-compra" id="finalizar-compra">Finalizar Compra</button>
+        </div>
+    </div>
+
+
+
+    <div class="tarjeta-articulos">
+        <h5 class="titulo-articulos">Lista de Artículos</h5>
+        <div>
+            <form class="formulario-buscar" method="get">
+                <input class="form-control form-control-sm me-2" type="search" placeholder="Buscar..." aria-label="Search" name="q">
+                <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div>
+            <ul id="lista-articulos">
+                <p class="titulo-articulo-mostrado">Articulo---------(Stock)-------------- Costo Precio Cantidad - Accion - </p>
+                {% for articulo in articulos %}
+                    
+                    <li  data-id="{{ articulo.id }}" data-nombre="{{ articulo.articulo }}">
+                        <p class="articulo-mostrado">{{articulo.articulo}} - ({{ articulo.stock }})</p>
+                        <input type="text" class="costo" value="{{ articulo.costo }}">
+                        <input type="text" class="precio" value="{{ articulo.precio }}">
+                        <input type="number" class="cantidad" value="1" min="1" max="{{ articulo.stock }}">
+                        <button class="agregar">Agregar</button>                        
+                    </li>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/carrito_compra.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+
+{% block link%} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_caja.css') }}"> 
+{% endblock%}
+
+{% block content %}
+
+    <h5 class="m-3">{% block title %}Caja{% endblock %} Fecha: {{ fecha }}</h5> 
+
+    <div id="collapse1">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">FECHA</th>
+                    <th scope="col">TIPO</th>
+                    <th scope="col">CAJA</th>
+                    <th scope="col">MONTO</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for caja in cajas %}
+                    <tr>
+                        <td scope="row">{{ caja.fecha }}</td>
+                        <td>{{ caja.tipo }}</td>
+                        <td>{{ caja.caja }}</td>
+                        <td>{{ caja.monto }}</td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+
+    </div>
+    <hr>
+    <div class="m-3">
+        <h5>Totales</h5>
+        <div>Total Compra Efectivo = {{ t_e_compra }}</div>
+        <div>Total Compra Billetera = {{ t_b_compra }}</div>
+        <div>Total Venta Efectivo = {{ t_e_venta }}</div> 
+        <div>Total Venta Billetera = {{ t_b_venta }}</div>
+        <div>Total Billetera a Efectivo = {{ t_transf_a_efectivo }}</div>
+        <div>Total Efectivo a Billetera = {{ t_transf_a_billetera }}</div>
+        <div>Total Efectivo = {{ t_e_venta - t_e_compra + t_transf_a_efectivo - t_transf_a_billetera }}</div>
+        <div>Total Billetera = {{ t_b_venta - t_b_compra + t_transf_a_billetera - t_transf_a_efectivo }}</div> 
+        <div>Total: {{ t_e_venta - t_e_compra + t_transf_a_efectivo - t_transf_a_billetera + t_b_venta - t_b_compra + t_transf_a_billetera - t_transf_a_efectivo }}</div>       
+    </div>
+    <hr>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <h4 class="text-center">Transferencias</h4>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="fecha">Fecha:</label>
+            <input type="date" class="form-control" id="fecha" value="{{ fecha }}">
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="opcion">Tipo:</label>
+            <select class="form-select" id="opcion">
+                <option value="A EFECTIVO">BILLETERA A EFECTIVO</option>
+                <option value="A BILLETERA">EFECTIVO A BILLETERA</option>
+            </select>
+        </div>
+        
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="monto">Monto</label>
+            <input type="number" class="form-control" id="monto">
+        </div>
+    
+        <div class="text-center">
+            <button class="btn btn-primary me-3" id="aceptar">Tranferir</button>
+            <button class="btn btn-secondary" id="cancelar" onclick="window.close()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Resultados seleccionados de la ventana emergente -->
+    <div id="resultados"></div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/caja.js') }}"></script>
+{% endblock %}
+

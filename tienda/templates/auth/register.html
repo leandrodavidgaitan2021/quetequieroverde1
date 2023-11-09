@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">{% block title %}Registrar usuario{% endblock %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post">
+                            
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Usuario</span>
+                                <input type="text" class="form-control" aria-label="Username" aria-describedby="inputGroup-sizing-sm" id="username" name="username" required minlength="4" maxlength="20">
+                            </div>
+                            
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Contraseña</span>
+                                <input type="password" class="form-control" aria-label="Password" aria-describedby="inputGroup-sizing-sm" id="password" name="password" required minlength="8" maxlength="20">
+                            </div>
+            
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Apellido</span>
+                                <input type="text" class="form-control" aria-label="Apellido" aria-describedby="inputGroup-sizing-sm" id="apellido" name="apellido" required maxlength="40">
+                            </div>
+                            
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Nombres</span>
+                                <input type="text" class="form-control" aria-label="Nombre" aria-describedby="inputGroup-sizing-sm" id="nombre" name="nombre" required maxlength="40">
+                            </div>
+                            
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="tcliente">Tipo Cliente</label>
+                                <select class="form-control" id="tcliente" name="tcliente" required>
+                                  <option selected id="tcliente" name="tcliente">Opciones</option>
+                                  <option value="Consumidor Final" id="tcliente" name="tcliente">Consumidor Final</option>
+                                  <option value="Responsable Inscripto" id="tcliente" name="tcliente">Responsable Inscripto</option>
+                                  <option value="Monotributista" id="tcliente" name="tcliente">Monotributista</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">CUIT/CUIL</span>
+                                <input type="text" class="form-control" aria-label="Cuit" aria-describedby="inputGroup-sizing-sm" id="cuit" name="cuit" required maxlength="12">
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Dirección</span>
+                                <input type="text" class="form-control" aria-label="Direccion" aria-describedby="inputGroup-sizing-sm" id="direccion" name="direccion" required maxlength="60">
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Telefono</span>
+                                <input type="tel" class="form-control" aria-label="Telefono" aria-describedby="inputGroup-sizing-sm" id="telefono" name="telefono" required maxlength="40">
+                            </div>
+                         
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                                <input type="email" class="form-control" aria-label="Email" aria-describedby="inputGroup-sizing-sm" id="email" name="email" required maxlength="40">
+                            </div>
+                            
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Nacimiento</span>
+                                <input type="date" class="form-control" aria-label="Fecha Nacimiento" aria-describedby="inputGroup-sizing-sm" id="fechanac" name="fechanac" required >
+                            </div>                            
+
+                            <br>
+
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Registrar">
+                                <a href="{{ url_for('ventas.lista') }}" class="btn btn-secondary">Cancelar</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

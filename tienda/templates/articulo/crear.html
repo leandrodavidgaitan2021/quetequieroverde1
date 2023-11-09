@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center p-2 mb-2 bg-success text-white">{% block title %}Crear articulo{% endblock %}</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="tipo">Codigo</label>
+                            <select class="form-control" id="codigoart" name="codigoart" required>
+                              <option value="">Opciones</option>
+                              {% for codigo in listacodi %}
+                              <option value="{{ codigo }}">{{ codigo }}</option>
+                              {% endfor %}
+                              <option value="GASTOS">Gastos</option>
+                            </select>
+                        </div>
+
+                       
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Articulo</span>
+                            <input type="text" class="form-control" aria-label="Articulo" aria-describedby="inputGroup-sizing-sm" id="articulo" name="articulo" required minlength="8" maxlength="30">
+                        </div>
+<!--
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion</span>
+                            <input type="text" class="form-control" aria-label="Descripcion" aria-describedby="inputGroup-sizing-sm" id="descricion" name="descripcion" minlength="20" maxlength="50">
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion larga</span>
+                            <textarea class="form-control" aria-label="Descripcion larga" aria-describedby="inputGroup-sizing-sm" id="descricion_larga" name="descripcion_larga" maxlength="750"></textarea>
+                        </div>
+-->
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="tipo">Tipo Articulo</label>
+                            <select class="form-control" id="tipo" name="tipo" required>
+                              <option value="">Opciones</option>
+                              {% for categoria in categorias %}
+                              <option value="{{ categoria.categoria }}">{{ categoria.categoria }}</option>
+                              {% endfor %}
+                              <option value="Silvana">Silvana</option>
+                            </select>
+                        </div>
+                       
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Costo</span>
+                            <input type="text" class="form-control" aria-label="Costo" aria-describedby="inputGroup-sizing-sm" id="costo" name="costo" required maxlength="5">
+                        </div>
+        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Precio</span>
+                            <input type="text" class="form-control" aria-label="Precio" aria-describedby="inputGroup-sizing-sm" id="precio" name="precio" required maxlength="6">
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="tipo">Proveedor</label>
+                            <select class="form-control" id="proveedor" name="proveedor" required>
+                              <option value="">Opciones</option>
+                              {% for proveedor in proveedores %}
+                                <option value="{{ proveedor.razonsocial }}">{{ proveedor.razonsocial }}</option>
+                              {% endfor %}
+                              <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+<!--                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Imagen</span>
+                            <input type="file" class="form-control" accept="image/png, image/jpeg" aria-label="Imagen" aria-describedby="inputGroup-sizing-sm" id="imgfile" name="imgfile">
+                        </div>
+-->
+                        <br>
+
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-success btn-sm" value="Guardar">
+                            <a href="{{ url_for('articulos.lista') }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,139 @@
+
+/* seccion clientes */
+.titulo-clientes, .titulo-proveedores{
+    padding-right: 10px;
+}
+
+
+
+.clientes, .proveedores, .fecha{
+    padding: 5px;
+    margin: 3px;
+    color: red;
+    align-items: start;
+}
+.fecha{
+    margin-left: 10px;
+    width: 130px;
+}
+
+.lista-clientes, .lista-proveedores{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+
+}
+
+
+
+/* seccion carrito */
+.seccion-carrito{
+    background-color: rgb(193, 248, 250);
+    color: black;
+}
+.titulo-carrito{
+    background-color: aquamarine;
+    text-align: center;
+}
+.metodo-pago{
+    height: 30px;
+    align-items: center; /* Centra verticalmente los elementos */
+}
+.titulo-total{
+    color: red;
+    text-align: right;
+    margin-right: 20px;
+}
+.vaciar-carrito{
+    background-color: blue;
+    color: white;
+}
+
+.finalizar-compra{
+    background-color: green;
+    color: white;
+}
+
+
+.parrafo-articulo-carrito{
+    margin-left: 100px;
+    display: inline-block;
+    width: 400px;
+}
+
+
+
+.botones-acciones{
+    margin: 15px;
+    text-align: center;
+}
+
+
+.boton-borrar{
+    background-color: white ;
+    color: red;
+
+    margin-left: 10px;
+}
+.boton-borrar:hover{
+    background-color: red;
+    color: white ;
+    margin-left: 10px;
+}
+
+
+
+/* seccion lista articulos */
+.titulo-articulos{
+    background-color: beige;
+    text-align: center;
+
+}
+.tarjeta-articulos{
+    padding: 5px;
+    background-color: rgb(226, 241, 239);
+    color: black;
+}
+
+.agregar{
+    background-color: cyan;
+
+}
+.agregar:hover{
+    background-color: greenyellow;
+
+}
+
+.articulo-mostrado{
+    display: inline-block;
+    width: 400px;
+}
+
+
+
+
+
+li{
+    list-style-type:none
+       
+}
+
+input {
+    width: 50px;
+}
+
+
+
+
+
+.formulario-buscar{
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.lista-articulo-precio{
+    width:250px;
+}
+
+

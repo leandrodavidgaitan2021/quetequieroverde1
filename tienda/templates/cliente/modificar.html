@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center bg-info p-2">{% block title %}Modificar Cliente{% endblock %}</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+                            <input type="text" class="form-control" aria-label="Nombre" aria-describedby="inputGroup-sizing-sm" id="nombre" name="nombre" maxlength="50" value="{{ client.nombre }}">
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Direccion</span>
+                            <input type="text" class="form-control" aria-label="Direccion" aria-describedby="inputGroup-sizing-sm" id="direccion" name="direccion" maxlength="50" value="{{ client.direccion }}">
+                        </div>
+                       
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Telefono</span>
+                            <input type="text" class="form-control" aria-label="Telefono" aria-describedby="inputGroup-sizing-sm" id="telefono" name="telefono" maxlength="20" value="{{ client.telefono }}">
+                        </div>
+        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                            <input type="email" class="form-control" aria-label="Email" aria-describedby="inputGroup-sizing-sm" id="email" name="email" maxlength="50" value="{{ client.email }}">
+                        </div>
+
+                    
+                        
+                        <br>
+
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-info btn-sm" value="Guardar">
+                            <a href="{{ url_for('clientes.lista') }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

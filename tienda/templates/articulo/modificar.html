@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center bg-info p-2">{% block title %}Modificar articulo{% endblock %}</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
+                            <input type="text" class="form-control" aria-label="Codigo" aria-describedby="inputGroup-sizing-sm" id="codart" name="codart" value="{{ art.codart }}" disabled>
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Articulo</span>
+                            <input type="text" class="form-control" aria-label="Articulo" aria-describedby="inputGroup-sizing-sm" id="articulo" name="articulo" minlength="8" maxlength="30" value="{{ art.articulo }}">
+                        </div>
+<!--
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion</span>
+                            <input type="text" class="form-control" aria-label="Descripcion" aria-describedby="inputGroup-sizing-sm" id="descripcion" name="descripcion" maxlength="50" value="{{ art.descripcion }}">
+                        </div>
+
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion larga</span>
+                            <textarea class="form-control" aria-label="Descripcion larga" aria-describedby="inputGroup-sizing-sm" id="descripcion_larga" name="descripcion_larga" maxlength="750" value="{{ art.descripcion_larga }}"></textarea>
+                        </div>
+-->                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Tipo</span>
+                            <input type="text" class="form-control" aria-label="Tipo" aria-describedby="inputGroup-sizing-sm" id="tipo" name="tipo" value="{{ art.tipo }}" disabled>
+                        </div>
+
+                       
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Costo</span>
+                            <input type="text" class="form-control" aria-label="Costo" aria-describedby="inputGroup-sizing-sm" id="costo" name="costo" maxlength="5" value="{{ art.costo }}">
+                        </div>
+        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Precio</span>
+                            <input type="text" class="form-control" aria-label="Precio" aria-describedby="inputGroup-sizing-sm" id="precio" name="precio" maxlength="6" value="{{ art.precio }}">
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
+                            <input type="text" class="form-control" aria-label="Cantidad" aria-describedby="inputGroup-sizing-sm" id="stock" name="stock" maxlength="10" value="{{ art.stock }}" disabled>
+                        </div>
+                        
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Proveedor</span>
+                            <input type="text" class="form-control" aria-label="Proveedor" aria-describedby="inputGroup-sizing-sm" id="proveedor" name="proveedor" maxlength="10" value="{{ art.proveedor }}" disabled>
+                        </div>
+<!--                     
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Foto</span>
+                            <input type="file" class="form-control" accept="image/png, image/jpeg" aria-label="Imagen" aria-describedby="inputGroup-sizing-sm" id="imgfile" name="imgfile">
+                        </div>
+-->                           
+                        <br>
+
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-info btn-sm" value="Guardar">
+                            <a href="{{ url_for('articulos.lista') }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

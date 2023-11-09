@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="">Que te quiero Verde</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+
+          {% if g.user %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('articulos.lista')}}">Articulos</a>
+            </li>
+    
+            {% if g.user.tcliente == "Administrador" %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('proveedores.lista')}}">Proveedores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('categorias.lista')}}">Categorias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('clientes.lista')}}">Clientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('ventas.lista')}}">Venta</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('compras.lista')}}">Compra</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('cajas.lista')}}">Caja</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="">Carrito de Compras</a>
+              </li>        
+            {% endif %}
+
+            <li class="nav-item">
+              <span class="nav-link active">Bienvenido {{ g.user.username }}</span>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('auth.logout')}}">Cerrar</a>
+            </li>
+          {% else %}  
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('auth.login')}}">Ingresar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('auth.register')}}">Registrar</a>
+            </li>
+
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+</nav>
