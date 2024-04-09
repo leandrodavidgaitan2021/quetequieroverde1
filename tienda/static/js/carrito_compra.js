@@ -53,24 +53,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para actualizar la lista del carrito y calcular el total
     function actualizarCarrito(carritoItems) {
         carrito.innerHTML = "";
-
         carritoTotal = 0;
-        carritoItems.forEach(item => {
-            const listItem = document.createElement("li");
-            listItem.classList.add("articulo-carrito");
+        
+        if (carritoItems == 0){
+            document.getElementById("finalizar-compra").disabled = true;
+            document.getElementById("vaciar-carrito").disabled = true;
+        } else {
+            document.getElementById("finalizar-compra").disabled = false;
+            document.getElementById("vaciar-carrito").disabled = false;
+        }
 
-            const parrafo = document.createElement("p")
-            parrafo.classList.add("parrafo-articulo-carrito");
+        carritoItems.forEach(item => {
+            const listItem = document.createElement("tr");
+
+
+            const parrafo = document.createElement("td")
             parrafo.textContent = `${item.nombre} - $ ${item.costo} x ${item.cantidad} = $${(item.costo * item.cantidad).toFixed(2)}`;
 
 
             const botonBorrar = document.createElement("button");
             botonBorrar.classList.add("boton-borrar");
-            botonBorrar.textContent = "Eliminar";
             botonBorrar.addEventListener("click", function () {
                 borrarArticuloDelCarrito(item.id);
             });
             
+            // Crea el icono y lo añade al botón
+            const icono = document.createElement("i");
+            icono.classList.add("bi", "bi-trash-fill");
+            botonBorrar.appendChild(icono);            
+
             listItem.appendChild(parrafo)
             listItem.appendChild(botonBorrar);
             carrito.appendChild(listItem);
@@ -92,10 +103,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Vaciar completamente el carrito
     vaciarCarritoBtn.addEventListener("click", function () {
-        localStorage.removeItem("carrito-compra");
-        carrito.innerHTML = "";
-        total.textContent = "0.00";
+        
+        Swal.fire({
+            title: 'Vaciar Carrito?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            width: '300px',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("carrito-compra");
+                carrito.innerHTML = "";
+                total.textContent = "0.00";
+                document.getElementById("finalizar-compra").disabled = true;
+                document.getElementById("vaciar-carrito").disabled = true;
+            }
+          })
     });
+
+    // Función para ocultar el mensaje flash después de un tiempo
+    function ocultarMensaje() {
+        var mensaje = document.getElementById('flash-message');
+        setTimeout(function(){
+            mensaje.style.display = 'none';
+        }, 3000);  // Ocultar después de 3 segundos (puedes ajustar esto según tus necesidades)
+    }
+
 
     // Carga el carrito almacenado en el LocalStorage al cargar la página
     const carritoAlmacenado = JSON.parse(localStorage.getItem("carrito-compra")) || [];
@@ -103,48 +140,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Finalizar la compra
     finalizarCompraBtn.addEventListener("click", function () {
-        const fechaSeleccionada = fechaSelect.value;
-        console.log(fechaSeleccionada);
-        const proveedorSeleccionado = proveedoresSelect.value;
-        const metodoPagoSeleccionado = metodoPagoSelect.value;
-        const totalCarrito = carritoTotal;
-        console.log(totalCarrito)
-        const carritoItems = JSON.parse(localStorage.getItem("carrito-compra")) || [];
-
-        // Crear un objeto con el cliente y el carrito
-        const compra = {
-            fecha: fechaSeleccionada,
-            proveedor: proveedorSeleccionado,
-            metodo: metodoPagoSeleccionado,
-            totalcompra: totalCarrito,
-            carrito: carritoItems
-        };
-
-        // Realizar una solicitud POST al servidor Flask
-        fetch('/compras/finalizar_compra', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(compra)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert("Error: " + data.error);
-            } else {
-                alert("Compra finalizada con éxito.");
-                                // La compra fue exitosa
-                
-                // Limpia el carrito y la página
-                localStorage.removeItem("carrito-compra");
-                carrito.innerHTML = "";
-                total.textContent = "0.00";
-                location.reload();
+        Swal.fire({
+            title: 'Finalizar Compra?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            width: '300px',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                const fechaSeleccionada = fechaSelect.value;
+                const proveedorSeleccionado = proveedoresSelect.value;
+                const metodoPagoSeleccionado = metodoPagoSelect.value;
+                const totalCarrito = carritoTotal;
+                const carritoItems = JSON.parse(localStorage.getItem("carrito-compra")) || [];
+        
+                // Crear un objeto con el cliente y el carrito
+                const compra = {
+                    fecha: fechaSeleccionada,
+                    proveedor: proveedorSeleccionado,
+                    metodo: metodoPagoSeleccionado,
+                    totalcompra: totalCarrito,
+                    carrito: carritoItems
+                };
+        
+                // Realizar una solicitud POST al servidor Flask
+                fetch('/compras/finalizar_compra', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(compra)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    } else {
+                        
+                        // Limpia el carrito y la página
+                        localStorage.removeItem("carrito-compra");
+                        carrito.innerHTML = "";
+                        total.textContent = "0.00";
+                        ocultarMensaje();
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    alert("Error al realizar la compra: " + error);
+                });
             }
-        })
-        .catch(error => {
-            alert("Error al realizar la compra: " + error);
-        });
-    });
+        });    
+        
+    });    
+
 });

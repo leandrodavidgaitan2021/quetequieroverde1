@@ -57,7 +57,6 @@
 
 
 .parrafo-articulo-carrito{
-    margin-left: 100px;
     display: inline-block;
     width: 400px;
 }
@@ -65,21 +64,16 @@
 
 
 .botones-acciones{
-    margin: 15px;
+    margin: 5px;
     text-align: center;
 }
 
 
-.boton-borrar{
-    background-color: white ;
+.boton-borrar {
+    border: 0;
+    background-color: transparent;
     color: red;
-
-    margin-left: 10px;
-}
-.boton-borrar:hover{
-    background-color: red;
-    color: white ;
-    margin-left: 10px;
+    cursor: pointer;
 }
 
 
@@ -97,17 +91,16 @@
 }
 
 .agregar{
-    background-color: cyan;
-
+    border: 0;
+    background-color: transparent;
+    color: green;
+    cursor: pointer;
 }
-.agregar:hover{
-    background-color: greenyellow;
 
-}
 
 .articulo-mostrado{
     display: inline-block;
-    width: 400px;
+    width: 250px;
 }
 
 

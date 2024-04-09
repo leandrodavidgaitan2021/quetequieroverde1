@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+<!-- Incluye los mensages flash-->
+{% include '_messages.html' %}
+
+
+{% block content %}
+
+<h1>Formulario con Captura de Imágenes</h1>
+
+  <form id="myForm">
+
+    <input type="file" id="fileInput" accept="image/*" onchange="previewImage()">
+
+    <div id="preview-container">
+      <img id="preview-image" style="width: 250px; height: 250px;">
+      <video id="camera-preview" autoplay style="display: none; width: 250px; height: 250px;"></video>
+
+      <button type="button" id="capture-button" onclick="capturePhoto()" >Capturar Foto</button>
+
+    </div>
+
+    <button type="submit">Enviar</button>
+
+  </form>
+
+    {% block scripts %}
+
+        <script src="{{ url_for('static', filename='js/camara.js') }}"></script>
+
+    {% endblock %}
+{% endblock %}

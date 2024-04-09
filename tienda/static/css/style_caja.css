@@ -1,4 +1,18 @@
 #collapse1{
     overflow-y:scroll;
-    height:400px;
+    height:550px;
+}
+
+#collapse2{
+    overflow-y:scroll;
+    height:450px;
+}
+
+.total {
+    color: #ff0000;
+    text-align: right;
+}
+
+.operacion_caja {
+    color: #ff0000;
 }

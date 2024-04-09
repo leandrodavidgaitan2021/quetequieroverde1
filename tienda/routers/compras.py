@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, session, url_for, redirect, flash, g, jsonify, json
-from datetime import datetime
+
 
 # Importamos funcion para que que las vistas sea requerido logearse
 from tienda.routers.auth import login_required, login_admin
 from tienda.routers.articulos import crear
+from tienda.routers.busquedas import * 
 
 
 from tienda.modelos import articulo
@@ -23,7 +24,7 @@ bp = Blueprint('compras', __name__, url_prefix='/compras')
 @login_required
 def lista():
     #Almacena todos los proveedores en un lista para enviarlos 
-    _proveedores = proveedor.Proveedor.query.all() 
+    _proveedores = buscar_todos_proveedores()
     
     
     # Recibe un dato para buscar un articulo
@@ -31,15 +32,12 @@ def lista():
     # Si recibio un dato para buscar lo filtra y lo guarda, 
     # SI NO manda la lista entera de articulos 
     if q:
-        _articulos = articulo.Articulo.query.filter(
-            articulo.Articulo.articulo.contains(q) | 
-            articulo.Articulo.codart.contains(q) |
-            articulo.Articulo.tipo.contains(q))
+        _articulos = buscar_articulos(q)
     else: 
-        _articulos = articulo.Articulo.query.all()
+        _articulos = buscar_todos_articulos()
 #    print(_articulos)
 
-    fecha = datetime.now().strftime("%Y-%m-%d")
+    fecha = fecha_hora_actual()
     
     return render_template('compra/lista.html', articulos = _articulos, proveedores = _proveedores, fecha = fecha)
 
@@ -63,7 +61,7 @@ def finalizar_compra():
 
 
 #### Seccion para guardar la Compra ####    
-    _fecha = datetime.strptime(fecha_data, "%Y-%m-%d").date()
+    _fecha = guarda_fecha(fecha_data)
     creado_por_ = g.user.id
     _proveedor_id = proveedor_data
     _metodo_pago = metodo_pago_data
@@ -75,28 +73,23 @@ def finalizar_compra():
 
 # Seccion para actualizar caja        
     tipo_ = "C"
-    
-    if metodo_pago_data == "E":
-        caja_ = metodo_pago_data
-        monto_ = total_compra
-        caja_ = caja.Caja(_fecha, tipo_, caja_, monto_, creado_por_)
-        db.session.add(caja_)
-    elif metodo_pago_data == "B":
-        caja_ = metodo_pago_data
-        monto_ = total_compra
-        caja_ = caja.Caja(_fecha, tipo_, caja_, monto_, creado_por_)
-        db.session.add(caja_)
+    id_tipo_ = cantidad_compra + 1
+    caja_ = metodo_pago_data
+    monto_ = total_compra
+    caja_ = caja.Caja(_fecha, tipo_, id_tipo_, caja_, monto_, creado_por_)
+    db.session.add(caja_)
 
-    
+    _compra_id = cantidad_compra + 1    
+
 #### Seccion para guardar la compra
     for articulo_carrito in carrito_data:
-        _compra_id = cantidad_compra + 1
+
         _articulo_id =  articulo_carrito["id"]
         _cantidad = articulo_carrito["cantidad"]
         _costo_actualizado = articulo_carrito["costo"]
         _precio_unitario_actualizado = articulo_carrito["precio"]
 
-        articulo_buscado= get_articulo(_articulo_id)
+        articulo_buscado= buscar_id_articulo(_articulo_id)
 
 
         if articulo_buscado:
@@ -106,22 +99,12 @@ def finalizar_compra():
             articulo_buscado.costo = _costo_actualizado # actualiza costo de articulo Tabla ARTICULO
             articulo_buscado.precio = _precio_unitario_actualizado # actualiza precio de articulo Tabla ARTICULO
             db.session.add(detalle_compra_) # guarda TABLA DETALLE_COMPRA
-            db.session.commit()
+            
 
-
+    db.session.commit()
     # Devuelve una respuesta al cliente
     return jsonify({"mensaje": "Compra realizada con éxito"})
 
 
 
 
-
-### metodo para buscar cliente por ID
-def get_cliente(id):
-    proveedor_buscado = proveedor.Proveedor.query.get_or_404(id)
-    return proveedor_buscado
-
-### metodo para buscar articulo por ID
-def get_articulo(id):
-    articulo_buscado = articulo.Articulo.query.get_or_404(id)
-    return articulo_buscado

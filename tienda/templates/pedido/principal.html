@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="wrapper">
+        <header class="header-mobile">
+            <h6 class="logo">Que te quiero verde</h5>
+
+            <button class="open-menu" id="open-menu">
+                <i class="bi bi-list"></i>
+            </button>
+        </header>
+        <aside>
+            <button class="close-menu" id="close-menu">
+                <i class="bi bi-x"></i>
+            </button>
+            <header>
+                <h6 class="logo">Que te quiero verde</h6>
+                <span>Bienvenido {{ g.user.username }}</span>
+                <!-- Input para filtrar -->
+                <input type="text" id="filtroInput" placeholder="Escriba para filtrar">
+            </header>
+            <nav>
+                <ul class="menu">
+                    <li>
+                        <button id="todos" class="boton-menu boton-categoria active"><i class="bi bi-hand-index-thumb-fill"></i>Todos los productos</button>
+                    </li>
+                    <li>
+                        <button id="plantas" class="boton-menu boton-categoria"><i class="bi bi-hand-index-thumb"></i>Plantas</button>
+                    </li>
+                    <li>
+                        <button id="macetas" class="boton-menu boton-categoria"><i class="bi bi-hand-index-thumb"></i>Macetas</button>
+                    </li>
+                    <li>
+                        <button id="sustratos" class="boton-menu boton-categoria"><i class="bi bi-hand-index-thumb"></i>Sustratos</button>
+                    </li>
+                    <li>
+                        <a class="boton-menu boton-carrito" href="{{ url_for('pedidos.carrito') }}"><i class="bi bi-cart-fill"></i></i><span id="numerito" class="numerito">0</span></a>
+                    </li>
+                    <li>
+                        <button class="boton-menu" onclick="confirmLogout()">Cerrar s</button>
+                    </li>
+                </ul>
+            </nav>
+            <footer>
+                <p class="texto-fooster">© Leandro web </p>
+
+            </footer>
+        </aside>
+        <main>
+
+            <h2 class="titulo-principal" id="titulo-principal">Todos los productos</h2>
+
+
+            <div id="contenedor-productos" class="contenedor-productos">
+
+                <!-- Esto se rellena con js-->
+            </div>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+    
+</body>
+</html>

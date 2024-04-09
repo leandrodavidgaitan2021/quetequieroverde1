@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, url_for, redirect, flash,
 
 # Importamos funcion para que que las vistas sea requerido logearse
 from tienda.routers.auth import login_required, login_admin
+from tienda.routers.busquedas import * 
 
 from tienda.modelos import categoria
 from tienda import db
@@ -18,9 +19,9 @@ def lista():
     q = request.args.get('q')
     
     if q:
-        _categorias = categoria.Categoria.query.filter(categoria.Categoria.categoria.contains(q))
+        _categorias = buscar_q_categorias(q)
     else: 
-        _categorias = categoria.Categoria.query.all()
+        _categorias = buscar_todas_categorias()
     return render_template('categoria/lista.html', categorias = _categorias )
 
 
@@ -35,7 +36,7 @@ def crear():
 
         categoria_ = categoria.Categoria(_categoria, _creado_por)
          
-        busqueda_categoria = categoria.Categoria.query.filter_by(categoria = _categoria).first()
+        busqueda_categoria = buscar_categoria(_categoria)
         
         if busqueda_categoria == None:
             db.session.add(categoria_)
@@ -49,17 +50,13 @@ def crear():
     return render_template('categoria/crear.html')
 
 
-def get_categoria(id):
-    categoria_buscada = categoria.Categoria.query.get_or_404(id)
-    return categoria_buscada
-
 
 @bp.route('/modificar/<int:id>', methods = ["GET", "POST"])
 @login_required
 @login_admin
 def modificar(id):
     
-    cate = get_categoria(id)
+    cate = buscar_id_categoria(id)
     
     if request.method == "POST":
         cate.categoria = request.form["categoria"]

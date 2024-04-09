@@ -1,0 +1,10 @@
+
+#pdfContainer {
+    width: 80%; /* Ancho del contenedor del PDF */
+    height: 70vh; /* Altura del contenedor del PDF */
+    border: 1px solid black; /* Borde para visualizar el contenedor */
+}
+iframe {
+    width: 100%;
+    height: 100%;
+}

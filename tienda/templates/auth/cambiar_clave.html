@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">{% block title %}Cambiar Contraseña{% endblock %}</h1>
+                    </div>
+                    <div class="card-body">
+                        <form id="cambiarForm"">
+                            <div class="form-group">
+                                <label for="claveVieja">Actual</label>
+                                <input type="password" class="form-control" id="claveVieja" name="claveVieja" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="claveNueva1">Nueva</label>
+                                <input type="password" class="form-control" id="claveNueva1" name="claveNueva1" required minlength="8" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <label for="claveNueva2">Repetir Nueva</label>
+                                <input type="password" class="form-control" id="claveNueva2" name="claveNueva2" required minlength="8" maxlength="20">
+                            </div>
+
+                            <br>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" onclick="enviarDatos()">Cambiar Contraseña</button>
+                                <a href="{{ url_for('auth.opciones') }}" class="btn btn-secondary">Salir</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% block scripts %} 
+
+    <script src="{{ url_for('static', filename='js/clave.js') }}"></script>
+
+    {% endblock %}
+{% endblock %}

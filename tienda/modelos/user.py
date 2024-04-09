@@ -27,4 +27,4 @@ class User(db.Model):
         self.fechanac = fechanac
         
     def __repr__(self):
-        return f'<User: {self.username} >'
+        return f'{self.username}'

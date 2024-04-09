@@ -11,6 +11,7 @@ def create_app():
     
     app= Flask(__name__)
 
+    
     # Configuracion del proyecto
     app.config.from_mapping(
         DEBUG = True,
@@ -19,11 +20,12 @@ def create_app():
         SQLALCHEMY_DATABASE_URI = "sqlite:///tienda.db"
     )
     
+    
     # initialize the app with the extension
     db.init_app(app)
 
     # Registrar Blueprint
-    from .routers import auth, articulos, proveedores, categorias, clientes, ventas, compras, cajas
+    from .routers import auth, proveedores, categorias, clientes, ventas, compras, cajas, pedidos, ubicaciones, articulos
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(articulos.bp)
@@ -33,6 +35,8 @@ def create_app():
     app.register_blueprint(ventas.bp)
     app.register_blueprint(compras.bp)
     app.register_blueprint(cajas.bp)
+    app.register_blueprint(pedidos.bp)
+    app.register_blueprint(ubicaciones.bp)
 
     @app.route('/')
     def index():

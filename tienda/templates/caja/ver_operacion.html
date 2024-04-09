@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+
+{% block link%} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ver_pdf.css') }}"> 
+{% endblock%}
+
+{% block content %}
+
+
+    <h5 class="m-3">{% block title %}Detalle de Operacion{% endblock %}</h5> 
+    <div id="pdfContainer">
+        <iframe src="{{ url_for('static', filename=archivo_pdf ) }}" frameborder="0"></iframe> <!-- Reemplaza "archivo.pdf" con la ruta de tu PDF -->
+    </div>
+    
+    <hr>
+    <div class="text-center">
+        <input type="hidden" id="pdf" value="{{ archivo_pdf }}">
+        <button class="btn btn-secondary btn-sm" onclick="eliminarPDF()">Volver</button>
+    </div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/correo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/fecha.js') }}"></script>
+{% endblock %}

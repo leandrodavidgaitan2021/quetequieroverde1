@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+{% block link%} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_caja.css') }}"> 
+{% endblock%}
+
+{% block content %}
+
+    <h2 class="m-3">{% block title %}Caja{% endblock %} Fecha: {{ fecha }}</h2> 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h3 class="text-center">Totales</h3>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Contenido de la primera columna -->
+                <h4>Compras</h4>
+                <div>Efectivo = ${{ t_e_compra }}</div>
+                <div>Billetera = ${{ t_b_compra }}</div>
+                {% set total_compra = t_e_compra + t_b_compra %}
+                <div>Totales Compras = ${{ total_compra }}</div> 
+            </div>
+            <div class="col-md-6">
+                <!-- Contenido de la segunda columna -->
+                <h4>Ventas</h4>
+                <div>Efectivo = ${{ t_e_venta }}</div> 
+                <div>Billetera = ${{ t_b_venta }}</div>
+                {% set total_venta = t_e_venta + t_b_venta%}
+                <div>Totales Ventas = ${{ total_venta }}</div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Contenido de la segunda columna -->
+                <h4>Transferencias</h4>
+                <div>De Billetera a Efectivo = ${{ t_transf_a_efectivo }}</div>
+                <div>De Efectivo a Billetera = ${{ t_transf_a_billetera }}</div>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center" >
+            <div class="col-md-6"">
+                <h6>TOTALES EN CAJAS</h6>
+                {% set total_efectivo = t_e_venta - t_e_compra + t_transf_a_efectivo - t_transf_a_billetera %}
+                <div>Total Efectivo = ${{ total_efectivo }}</div>
+                {% set total_billetera = t_b_venta - t_b_compra + t_transf_a_billetera - t_transf_a_efectivo %}
+                <div>Total Billetera = ${{ total_billetera }}</div> 
+                <div>Total General = ${{ total_efectivo + total_billetera }}</div> 
+            </div>      
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="text-center">
+        <a href="{{url_for('auth.opciones')}}" class="btn btn-info btn-sm">Volver</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+

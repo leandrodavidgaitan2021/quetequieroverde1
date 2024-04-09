@@ -31,4 +31,17 @@ class Articulo(db.Model):
 
         
     def __repr__(self):
-        return f'<Articulo: {self.articulo} >'
+        return f'{self.articulo}'
+    
+    
+    def serialize(self):
+        return {
+            'id': self.codart,
+            'titulo': self.articulo,
+            'imagen': self.imgfile,
+            'categoria': {
+                'nombre': self.tipo,
+                'id': self.tipo.lower()
+            },
+            'precio': self.precio
+        }

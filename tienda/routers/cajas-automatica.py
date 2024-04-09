@@ -37,6 +37,7 @@ def realizar_caja():
    
     for venta_ in ventas_:
         id_ = venta_.id
+        id_tipo_ = id_
         fecha_venta_ = venta_.fecha
         tipo_ = "V"
         caja_ = venta_.metodo_pago
@@ -61,12 +62,31 @@ def realizar_caja():
             monto_ += (detalle_venta_.cantidad * detalle_venta_.precio_unitario)
             # print(monto_)
         
-        _caja = caja.Caja(fecha_venta_, tipo_, caja_, monto_, creado_por_)
+        _caja = caja.Caja(fecha_venta_, tipo_, id_tipo_, caja_, monto_, creado_por_)
         db.session.add(_caja)
         db.session.commit()
 
 
     compras_ = compra.Compra.query.all()
+
+    for compra_ in compras_:
+        id_ = compra_.id
+        id_tipo_ = id_
+        fecha_compra_ = compra_.fecha
+        tipo_ = "C"
+        caja_ = compra_.metodo_pago
+        monto_ = 0
+        creado_por_ = compra_.creado_por
+        
+        detalle_compras_ = detalle_compra.DetalleCompra.query.filter_by(compra_id = id_).all()
+        for detalle_compra_ in detalle_compras_:
+            monto_ += (detalle_compra_.cantidad * detalle_compra_.precio_unitario)
+        
+        _caja = caja.Caja(fecha_compra_, tipo_, id_tipo_ caja_, monto_, creado_por_)
+        db.session.add(_caja)
+        db.session.commit()
+        
+    transferencia_ = compra.Compra.query.all()
 
     for compra_ in compras_:
         id_ = compra_.id
@@ -83,6 +103,7 @@ def realizar_caja():
         _caja = caja.Caja(fecha_compra_, tipo_, caja_, monto_, creado_por_)
         db.session.add(_caja)
         db.session.commit()
+        
 
     
     return "Se realizo caja"

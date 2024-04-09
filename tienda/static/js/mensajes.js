@@ -3,4 +3,4 @@ setTimeout(function() {
     for (var i = 0; i < mensajes.length; i++) {
         mensajes[i].style.display = 'none';
     }
-}, 2000); // Desaparecer después de 2 segundos
+}, 3000); // Desaparecer después de 2 segundos

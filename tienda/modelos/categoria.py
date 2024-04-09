@@ -11,4 +11,4 @@ class Categoria(db.Model):
         self.creado_por = creado_por
 
     def __repr__(self):
-        return f'<Categoria: {self.categoria} >'
+        return f'{self.categoria}'

@@ -19,4 +19,4 @@ class Proveedor(db.Model):
         self.creado_por = creado_por
 
     def __repr__(self):
-        return f'<Proveedor: {self.razonsocial} >'
+        return f'{self.razonsocial}'

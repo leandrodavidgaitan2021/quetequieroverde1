@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="text-center">{% block title %}Opciones{% endblock %}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div >
+                            <h6>Usuarios</h6>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('auth.crear_administrador')}}">Crear Usuario</a>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('auth.cambiar_clave')}}">Cambiar clave</a>
+                        </div>
+                        <hr>
+                        <div >
+                            <h6>Proveedores y Categorias</h6>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('proveedores.lista')}}">Proveedores</a>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('categorias.lista')}}">Categorias</a>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('clientes.lista')}}">Clientes</a>
+                        </div>
+                        <hr>
+                        <div >
+                            <h6>Actualizar Precios</h6>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('articulos.actualizar')}}">Actualizar Precios</a>
+                        </div>
+                        <hr>
+                        <div >                            
+                            <h6>Caja</h6>
+                            <a class="btn btn-info btn-sm" href="{{url_for('cajas.ver_caja')}}">Ver Caja</a>
+                            <a class="btn btn-info btn-sm" href="{{url_for('cajas.lista')}}">Ver Operaciones</a>
+                            <a class="btn btn-success btn-sm" href="{{url_for('cajas.transferencia')}}">Transferir</a>
+                        </div>
+                        <hr>                        
+                        <div >
+                            <h6>Compras</h6>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('compras.lista')}}">Cargar Compra</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

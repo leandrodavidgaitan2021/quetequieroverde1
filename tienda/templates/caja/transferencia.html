@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+
+{% block link%} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_caja.css') }}"> 
+{% endblock%}
+
+{% block content %}
+
+    <div class="d-grid gap-2 col-10 mx-auto">
+        <br>
+        <h4 class="text-center">{% block title %}Transferencia{% endblock %}</h4>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="fecha">Fecha:</label>
+                <input type="date" class="form-control" id="fecha" value="{{ fecha }}">
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="opcion">Tipo:</label>
+                <select class="form-select" id="opcion">
+                    <option value="A EFECTIVO">BILLETERA A EFECTIVO</option>
+                    <option value="A BILLETERA">EFECTIVO A BILLETERA</option>
+                </select>
+            </div>
+            
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="monto">Monto</label>
+                <input type="number" class="form-control" id="monto" >
+            </div>
+        
+            <div class="text-center">
+                <button class="btn btn-primary" id="aceptar">Tranferir</button>
+                <a href="{{ url_for('auth.opciones') }}" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/caja.js') }}"></script>
+{% endblock %}
+

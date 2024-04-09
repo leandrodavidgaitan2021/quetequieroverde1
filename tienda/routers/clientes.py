@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, url_for, redirect, flash,
 
 # Importamos funcion para que que las vistas sea requerido logearse
 from tienda.routers.auth import login_required, login_admin
+from tienda.routers.busquedas import *
 
 from tienda.modelos import cliente
 from tienda import db
@@ -18,10 +19,14 @@ def lista():
     q = request.args.get('q')
     
     if q:
-        _clientes = cliente.Cliente.query.filter(cliente.Cliente.nombre.contains(q))
+        _clientes = buscar_q_clientes(q)
     else: 
-        _clientes = cliente.Cliente.query.all()
+        _clientes = buscar_todos_clientes()
+        
     return render_template('cliente/lista.html', clientes = _clientes )
+
+
+
 
 @bp.route('/crear', methods = ["GET", "POST"])
 @login_required
@@ -36,9 +41,9 @@ def crear():
 
         cliente_ = cliente.Cliente(_nombre, _direccion, _telefono, _email)
          
-        busqueda_proveedor = cliente.Cliente.query.filter_by(nombre = _nombre).first()
+        busqueda_cliente = buscar_nombre_clientes(_nombre)
         
-        if busqueda_proveedor == None:
+        if busqueda_cliente == None:
             db.session.add(cliente_)
             db.session.commit()
             return redirect(url_for('clientes.lista'))
@@ -50,9 +55,6 @@ def crear():
     return render_template('cliente/crear.html')
 
 
-def get_cliente(id):
-    cliente_buscado = cliente.Cliente.query.get_or_404(id)
-    return cliente_buscado
 
 
 @bp.route('/modificar/<int:id>', methods = ["GET", "POST"])
@@ -60,7 +62,7 @@ def get_cliente(id):
 @login_admin
 def modificar(id):
     
-    client = get_cliente(id)
+    client = buscar_id_clientes(id)
     
     if request.method == "POST":
         client.nombre = request.form["nombre"]

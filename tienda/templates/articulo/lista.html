@@ -10,31 +10,36 @@
                     <th class="col">
                         <h5 class="text-center">{% block title %}Lista de articulos{% endblock %}</h5>
                     </th>
+                    <th>
+                        <a href="{{url_for('articulos.crear')}}" class="btn btn-success btn-sm me-2">Nuevo</a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="d-flex justify-content-center">
                         <form class="d-flex" method="get">
-                            <a href="{{url_for('articulos.crear')}}" class="btn btn-success btn-sm me-5">Nuevo</a>
+
                             <input class="form-control form-control-sm me-2" type="search" placeholder="Buscar..." aria-label="Search" name="q">
-                            <button class="btn btn-outline-success btn-sm me-5" type="submit">Buscar</button>
-                            <a href="{{url_for('articulos.actualizar')}}" class="btn btn-warning btn-sm">Actualizar</a>
+                            <button class="btn btn-outline-success btn-sm me-2" type="submit">Buscar</button>
+
                         </form>
                     </td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
     </nav>
 
     <div class="container mt-1">
-        <table class="table table-hover table-responsive">
+        <table class="table table-hover table-responsive table-sm">
             <thead>
                 <tr>
                     <th class="col">Articulo</th>
+                    <!--<th class="col">Costo</th>-->
                     <th class="col">Precio</th>
                     <th class="col">Stock</th>
-                    <th class="col" colspan="1">Modificar</th>
+                    <th class="col" colspan="1">Editar</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +47,10 @@
                 <tr>
                     <td>
                         <p>{{ articulo.articulo }}</p>
-                    </td>                
+                    </td>   
+                    <!--<td>
+                        <p>{{ articulo.costo }}</p>
+                    </td>-->              
                     <td>
                         <p>{{ articulo.precio }}</p>
                     </td>                
@@ -50,7 +58,11 @@
                         <p>{{ articulo.stock }}</p>
                     </td>
                     <td>
-                        <a href="{{url_for('articulos.modificar', id = articulo.id)}}" class="btn btn-info btn-sm">Modificar</a>
+                        {% if articulo.imgfile %}
+                            <a href="{{url_for('articulos.modificar', id = articulo.id)}}" class="btn btn-info btn-sm">Editar</a>
+                        {% else %}
+                            <a href="{{url_for('articulos.modificar', id = articulo.id)}}" class="btn btn-warning btn-sm">Editar</a>
+                        {% endif %}
                     </td>
                 
                 </tr>
